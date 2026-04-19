@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сторінка не знайдена | Секрет Казанови</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .notfound-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .notfound-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 64px 48px;
+            max-width: 520px;
+            width: 100%;
+            position: relative;
+        }
+
+        .notfound-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            -webkit-mask-image: radial-gradient(ellipse at center, transparent 40%, black 90%);
+            mask-image: radial-gradient(ellipse at center, transparent 40%, black 90%);
+            z-index: -1;
+        }
+
+        .notfound-code {
+            font-family: 'Jura', sans-serif;
+            font-size: 7rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #00d2ff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitch 3s ease-in-out infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { filter: blur(0px); transform: none; }
+            92% { filter: blur(1px); transform: translateX(-2px); }
+            94% { filter: blur(0px); transform: translateX(2px); }
+            96% { filter: blur(1px); transform: translateX(-1px); }
+            98% { filter: blur(0px); transform: none; }
+        }
+
+        .notfound-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .notfound-text {
+            font-size: 1rem;
+            color: #aaaaaa;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .notfound-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-top {
+            position: absolute;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Jura', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        @media (max-width: 480px) {
+            .notfound-card { padding: 40px 24px; }
+            .notfound-code { font-size: 5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="logo-top"><img src="ck-logo.png" alt="ck" style="height: 1.2em; width: auto; object-fit: contain; filter: brightness(10) contrast(0.8); opacity: 0.85;"></a>
+
+    <div class="notfound-page">
+        <div class="notfound-card fade-up">
+
+            <div class="notfound-code">404</div>
+            <h1 class="notfound-title">Ця сторінка зникла</h1>
+            <p class="notfound-text">
+                Схоже, сторінка була переміщена або видалена.<br>
+                Не переживай — головна сторінка нікуди не ділась.
+            </p>
+
+            <div class="notfound-buttons">
+                <a href="index.html" class="btn-glass primary-glow">← На головну</a>
+                <a href="index.html#pricing" class="btn-glass outline">Замовити зараз</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fade-up').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1893 @@
+
+/* ═══════════════════════════════════════════════════════
+   @property — CSS-змінна з плавною анімацією кольору!
+   Завдяки цьому трюку перехід між Ice Blue → Gold → Emerald
+   виконується як справжня CSS-анімація, а не миттєвий стрибок.
+════════════════════════════════════════════════════════ */
+@property --accent-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #00d2ff;
+}
+
+:root {
+  --bg-color: #0d0c0c;
+  --text-primary: #F2F2F2;
+  --text-secondary: #aaaaaa;
+  /* Dynamic Accent Color (Default: Young - Ice Blue) */
+  --accent-color: #00d2ff;
+  --link-color: var(--accent-color);
+  --border-color: rgba(255, 255, 255, 0.1);
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+  --font-heading: 'Jura', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --section-padding: 120px 5%;
+
+  /* Плавна анімація зміни акцентного кольору (800ms) */
+  transition: --accent-color 0.8s ease;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   AGE GROUPS — перемикання між 3 групами карток
+   Всі 18 карток знаходяться в DOM для повного SEO-охоплення
+════════════════════════════════════════════════════════ */
+.age-cards-wrapper {
+  position: relative;
+}
+
+.age-group {
+  display: none;
+}
+
+.age-group.active-group {
+  display: block;
+  animation: ageGroupIn 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes ageGroupIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Послідовна (stagger) анімація карток — iOS-ефект каскаду */
+.age-group.active-group .glass-card-small:nth-child(1) { animation: cardCascade 0.4s ease 0.00s both; }
+.age-group.active-group .glass-card-small:nth-child(2) { animation: cardCascade 0.4s ease 0.07s both; }
+.age-group.active-group .glass-card-small:nth-child(3) { animation: cardCascade 0.4s ease 0.14s both; }
+.age-group.active-group .glass-card-small:nth-child(4) { animation: cardCascade 0.4s ease 0.21s both; }
+.age-group.active-group .glass-card-small:nth-child(5) { animation: cardCascade 0.4s ease 0.28s both; }
+.age-group.active-group .glass-card-small:nth-child(6) { animation: cardCascade 0.4s ease 0.35s both; }
+
+@keyframes cardCascade {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Montserrat', sans-serif;
+  color: var(--text-primary);
+  background-color: #000;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Надійний спосіб фіксованого фону для старих мобільних браузерів */
+body::before {
+  content: "";
+  position: fixed;
+  top: -15vh; /* Надійний оффсет без використання calc() */
+  left: 0;
+  width: 100%;
+  height: 130vh; /* З величезним запасом для старих Android-браузерів, що не розуміють скролл */
+  background-image: url('bg_ballet_ai.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -10;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Typography */
+h1, h2, h3, h4, .logo-text {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  animation: slowShimmer 4s ease-in-out infinite;
+}
+
+@keyframes slowShimmer {
+  0%, 100% { 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+    border-color: rgba(255,255,255,0.1);
+    filter: brightness(1);
+  }
+  50% { 
+    box-shadow: 0 4px 25px rgba(135, 10, 35, 0.6), 0 0 12px rgba(255,255,255,0.2); 
+    border-color: rgba(255,255,255,0.4);
+    filter: brightness(1.15);
+  }
+}
+
+.btn-primary:hover {
+  background: var(--accent-gradient);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(135, 10, 35, 0.4);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;   /* логотип росте вниз */
+  z-index: 1000;
+  background: transparent;
+  border-bottom: none;
+}
+
+.logo-text {
+  font-size: 5.1rem;       /* \u00d73 \u2212 15% = 5.1rem */
+  font-weight: 300;
+  letter-spacing: -3px;
+  line-height: 1;
+  transform-origin: top left;
+}
+
+img.logo-text {
+  height: 1em; /* Scales dynamically based on the font-size of .logo-text */
+  width: auto;
+  object-fit: contain;
+  filter: brightness(10) contrast(0.8);
+  opacity: 0.85;
+}
+
+nav.center-nav {
+  display: flex;
+  gap: 32px;
+}
+
+nav.center-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+nav.center-nav a:hover {
+  color: var(--text-primary);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 80px; /* \u0417\u0431\u0456\u043b\u044c\u0448\u0435\u043d\u043e \u0437 24px \u0434\u043e 80px \u0449\u043e\u0431 \u0437\u043c\u0456\u0441\u0442\u0438\u0442\u0438 \u043d\u043e\u043c\u0435\u0440 \u0432\u043b\u0456\u0432\u043e */
+}
+
+.phone-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  /* Фон тепер на body, тут він прозорий */
+  background: transparent;
+}
+
+.hero-overlay {
+  display: none; 
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* --- GLASSMORPHISM CARD --- */
+.glass-card {
+  /* Майже повна прозорість фону */
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 550px;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  /* overflow: hidden видаляємо, щоб світіння не обрізалось, 
+     але для маски він потрібен на ::before */
+  z-index: 10;
+}
+
+/* Створюємо розмиття ТІЛЬКИ на границях через маску */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Градієнтна маска: центр повністю прозорий 0% блюру, краї розмиті */
+  -webkit-mask-image: radial-gradient(ellipse at center, transparent 40%, black 90%);
+  mask-image: radial-gradient(ellipse at center, transparent 40%, black 90%);
+  z-index: -1; /* Ховаємо під контент картки */
+}
+
+/* Для підсилення країв залишаємо дуже легке внутрішнє світіння */
+.glass-card {
+  box-shadow: inset 0 0 30px rgba(255,255,255,0.03), 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.glass-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* \u041b\u043e\u0433\u043e \u0432 Hero \u043a\u0430\u0440\u0442\u0446\u0456: \u0437\u0432\u0435\u0440\u0445\u0443, \u043f\u043e \u0446\u0435\u043d\u0442\u0440\u0443, 1/4 \u0432\u0438\u0441\u043e\u0442\u0438 */
+.hero-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.hero-logo-img {
+  height: 90px;          /* ~1/4 \u0432\u0438\u0441\u043e\u0442\u0438 \u043a\u0430\u0440\u0442\u043a\u0438 (~360px) */
+  width: auto;
+  object-fit: contain;
+  /* \u041b\u043e\u0433\u043e \u0431\u0456\u043b\u0435 \u043d\u0430 \u043f\u0440\u043e\u0437\u043e\u0440\u043e\u043c\u0443 \u0444\u043e\u043d\u0456, brightness \u0440\u043e\u0431\u0438\u0442\u044c \u0439\u043e\u0433\u043e \u0432\u0438\u0434\u0438\u043c\u0438\u043c */
+  filter: brightness(10) contrast(0.8);
+  opacity: 0.85;
+}
+
+
+.glass-badge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.glass-badge .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-color);
+  transition: all 0.5s ease;
+}
+
+.hero-title {
+  font-size: 2.5rem; /* Фолбек для старих браузерів */
+  font-size: clamp(2.3rem, 10vw, 3.5rem); /* трохи зменшив для мобілок, щоб не різало O */
+  font-weight: 800;
+  letter-spacing: 0px;
+  word-wrap: break-word; /* Дозволяє перенос */
+  overflow-wrap: break-word;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  transition: --accent-color 0.5s ease;
+}
+
+.hero-subtitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.glass-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--glass-border) 0%, transparent 100%);
+  margin-bottom: 24px;
+}
+
+.glass-features {
+  list-style: none;
+  margin-bottom: 40px;
+}
+
+.glass-features li {
+  font-size: 0.95rem;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.9;
+}
+
+.glass-features .icon {
+  background: rgba(255,255,255,0.05);
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+/* --- APP-STYLE BUTTONS --- */
+.glass-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 150px;
+}
+
+.btn-glass.primary-glow {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.btn-glass.primary-glow:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+}
+
+.btn-glass.outline {
+  background: rgba(255, 255, 255, 0.02);
+  color: #fff;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+}
+
+.btn-glass.outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+  .glass-actions {
+    flex-direction: column;
+  }
+}
+
+
+/* Main Content Wrapper */
+.main-content {
+  position: relative;
+  z-index: 2;
+  background: transparent; /* Було var(--bg-color), тепер прозоре для паралаксу */
+}
+
+/* Sections */
+.section {
+  padding: var(--section-padding);
+  background: transparent; /* Усе прозоре, щоб бачити фон */
+}
+
+/* На всякий випадок, якщо десь був .bg-dark, робимо його майже прозорим */
+.bg-dark {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* --- GLASS GRID FOR 6 CARDS --- */
+.age-switcher-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 10;
+}
+
+.age-switcher-container h3 {
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.age-switcher {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 40px;
+  padding: 6px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.age-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.age-btn:hover {
+  color: #fff;
+}
+
+.age-btn.active {
+  background: linear-gradient(135deg, #ffffff 0%, #d4d4d4 100%);
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.glass-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.glass-card-small {
+  /* Компонент, який ідентичний великій картці, але адаптований по розмірах */
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px 30px;
+  text-align: left;
+  position: relative;
+  z-index: 10;
+  box-shadow: inset 0 0 30px rgba(255,255,255,0.02), 0 20px 40px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.glass-card-small::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  -webkit-mask-image: radial-gradient(ellipse at center, transparent 30%, black 90%);
+  mask-image: radial-gradient(ellipse at center, transparent 30%, black 90%);
+  z-index: -1;
+}
+
+.glass-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px var(--accent-color));
+  transition: filter 0.5s ease, background 0.5s ease;
+}
+
+.glass-card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.glass-card-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 30px;
+  flex-grow: 1; /* Pushes button to bottom */
+}
+
+/* Animations for content swapping */
+.card-content-wrapper {
+  transition: opacity 0.3s ease;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content-wrapper.fade-out {
+  opacity: 0;
+}
+
+/* Glass Card small CTA Button */
+.glass-card-small .btn-glass {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 0.8rem;
+}
+
+/* Transparent Header */
+.transparent-header {
+  position: absolute; /* Not fixed, it scrolls UP with the mask layer */
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background: transparent;
+  border-bottom: none;
+}
+
+.transparent-header .logo-text { font-size: 2rem; color: #1a1a1a; letter-spacing: -1px; }
+.transparent-header nav a { color: #1a1a1a; font-size: 0.85rem; font-weight: 600; margin-right: 30px; letter-spacing: 1px; text-transform: uppercase; }
+.transparent-header .phone-link { color: #1a1a1a; font-weight: 700; margin-right: 20px; }
+.transparent-header .btn-outline { border-color: #1a1a1a; color: #1a1a1a; }
+.transparent-header .btn-outline:hover { background: #1a1a1a; color: #fff; }
+
+/* Fixed Background Layer */
+.fixed-bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0; /* at the very bottom */
+}
+
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+/* Якщо треба трохи затемнити відео, додаємо колір: background: rgba(0,0,0,0.2) */
+}
+
+/* Scrollable Mask Layer */
+.mask-layer {
+  position: relative;
+  z-index: 1; /* Scrolls over fixed background */
+}
+
+/* Stencil Hero */
+.stencil-hero {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* ТУТ МАГІЯ: ФОН СВІТЛИЙ, А ТЕКСТ ПРОЗОРИЙ */
+  background: #f0f0f0; 
+  position: relative;
+}
+
+.stencil-content {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stencil-subtitle {
+  color: #333;
+  letter-spacing: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: -40px;
+  z-index: 2;
+}
+
+.stencil-text {
+  font-size: clamp(10rem, 35vw, 35rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -10px;
+  margin: 0;
+  
+  /* Магія CSS Text Mask */
+  color: transparent;
+  background-image: url('Приклад HERO сторінки (відео)/2026-04-08 00-55-35.mp4'); 
+  /* Ми не можемо прокласти відео як background-image напряму без хаків. 
+     Для ідеального ефекту трафарету ми вирізаємо відео через mix-blend-mode. */
+}
+
+/* Справжня відео-маска (як на прикладі Elementor) */
+.stencil-hero {
+  background-color: #f5f5f5; /* Світлий фон як на відео */
+}
+
+.stencil-text {
+  /* Якщо фон світлий (#f5f5f5), а текст має бути вікном, ми малюємо чорний текст, 
+     і потім накладаємо blend-mode, або використовуємо background-clip.
+     Але оскільки відео під нами є окремим тегом <video>, 
+     найпростіше використати mix-blend-mode для всього Hero. */
+  font-size: clamp(10rem, 35vw, 35rem);
+  font-weight: 200;
+  letter-spacing: -15px;
+  color: #000; /* Чорний текст виріже дірку до відео */
+}
+
+.stencil-hero {
+  background: #ffffff;
+  mix-blend-mode: screen; /* Увага: екран вирізає чорний колір до прозорого! */
+}
+
+/* Але щоб кнопки не стали прозорими, кнопки треба винести за межі .stencil-hero 
+   або зробити їх світлими. Оптимальний метод: малювання маски. */
+
+/* === АЛЬТЕРНАТИВНИЙ МЕТОД (як на відео 1:1) === */
+.stencil-hero {
+  background: transparent; 
+}
+
+/* Ми робимо background-clip */
+.stencil-text {
+  background: transparent;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0,0,0,0.1);
+}
+
+/* Оскільми відео позаду, є шикарний трюк. Якщо background-attachment: fixed: */
+.stencil-hero {
+  background: #ffffff;
+  color: #000;
+  /* Це створює дірку в білому фоні */
+  mix-blend-mode: screen; 
+}
+
+.stencil-desc {
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: -20px;
+  letter-spacing: 1px;
+  max-width: 600px;
+}
+
+.stencil-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn-outline-light {
+  background: transparent;
+  border: 1px solid #1a1a1a;
+  color: #1a1a1a;
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-outline-light:hover { background: #1a1a1a; color: #fff; }
+
+/* Site Body Continues After Mask */
+.site-body {
+  position: relative;
+  background: #121212; /* Тут починається темна тема або світла, як захочете */
+  z-index: 2;
+  padding-top: 50px;
+}
+
+/* Sections General */
+section {
+  padding: var(--section-padding);
+}
+
+/* Needs / Pain Points */
+.grid-cols-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 40px 32px;
+  border-radius: 16px;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-icon {
+  margin-bottom: 24px;
+}
+
+.icon-3d-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  mix-blend-mode: screen; /* Прибирає чорний фон на зображенні */
+  filter: drop-shadow(0 10px 15px rgba(239, 125, 0, 0.2));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card:hover .icon-3d-img {
+  transform: scale(1.15) translateY(-5px);
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+/* How It Works (Solution) */
+.solution-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.solution-image {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.solution-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.step {
+  display: flex;
+  gap: 24px;
+}
+
+.step-number {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--accent-color);
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.price-card {
+  text-align: center;
+  padding: 48px 32px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--card-bg);
+  position: relative;
+  transition: all 0.3s;
+}
+
+.price-card.featured {
+  border-color: var(--accent-color);
+  background: linear-gradient(180deg, rgba(135, 10, 35, 0.1) 0%, rgba(0,0,0,0) 100%);
+  transform: scale(1.05);
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-color);
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.price {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  margin: 24px 0 12px;
+}
+
+.price span {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.price-card .btn {
+  width: 100%;
+  margin-top: 32px;
+}
+
+/* Animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes slowAppear {
+  0% { opacity: 0; transform: scale(0.95) translateY(40px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.slow-appear {
+  animation: slowAppear 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  opacity: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero {
+    padding-top: 150px; /* Offset the header significantly */
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+  }
+  .hero-text-left, .hero-text-right {
+    justify-self: center;
+    max-width: 100%;
+  }
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(13,12,12,0.8) 0%, rgba(13,12,12,0.6) 50%, #0d0c0c 100%);
+  }
+  
+  .solution-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+  
+  .price-card.featured {
+    transform: scale(1);
+    border-width: 2px;
+  }
+  
+  nav.center-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 16px 5%;
+  }
+  .logo-text {
+    font-size: 2.55rem;  /* ×2 − 15% = 2.55rem */
+    letter-spacing: -2px;
+  }
+  .header-right {
+    gap: 12px; /* Зменшений відступ між іконкою та бургером */
+  }
+  .phone-link {
+    font-size: 0; /* Старий Самсунг може не підхопити 480px, тому ховаємо для всіх моб */
+  }
+  .phone-link::before {
+    content: "📞";
+    font-size: 1.4rem;
+  }
+}
+
+/* ================================ */
+/* BURGER MENU & FULL-SCREEN GLASS */
+/* ================================ */
+
+.burger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  height: 22px;
+  z-index: 2000; /* Має бути вище оверлею, щоб закривати його */
+  position: relative;
+}
+
+.burger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Щоб було видно на світлому */
+}
+
+/* Анімація перетворення в хрестик */
+.burger-btn.active .burger-line:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+  background-color: var(--accent-color);
+}
+.burger-btn.active .burger-line:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.burger-btn.active .burger-line:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+  background-color: var(--accent-color);
+}
+
+.burger-btn:hover .burger-line {
+  background-color: var(--accent-color);
+}
+
+/* Оверлей меню */
+.glass-overlay-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1500;
+  background: rgba(13, 12, 12, 0.95); /* Надійний чорний фон для Samsung Browser */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+@supports (backdrop-filter: blur(25px)) or (-webkit-backdrop-filter: blur(25px)) {
+  .glass-overlay-menu {
+    background: rgba(13, 12, 12, 0.55);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+  }
+}
+
+.glass-overlay-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Helper для рівномірного розподілу елементів на ввесь екран */
+.menu-layout-helper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding-top: 5vh; /* Симетричні відступи, щоб Flexbox ідеально центрував */
+  padding-bottom: 5vh;
+  transform: translateY(40px) scale(0.95);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-overlay-menu.active .menu-layout-helper {
+  transform: translateY(0) scale(1);
+}
+
+.menu-logo {
+  font-size: clamp(6rem, 26vw, 12.15rem); /* Точна математика: 6rem для А3, ~6.7rem для Note10+, 12.15rem для ПК */
+  font-weight: 200;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.overlay-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  text-align: center;
+  align-items: center;
+}
+
+/* Ідеально тонкий хрестик через CSS */
+.overlay-close-btn {
+  position: absolute;
+  right: 60px;
+  top: 60px;
+  width: 60px; /* Зменшено на 10% */
+  height: 60px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.overlay-close-btn::before,
+.overlay-close-btn::after {
+  content: '';
+  position: absolute;
+  width: 55px; /* Довжина лінії хрестика зменшена на 10% */
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: background-color 0.3s ease;
+}
+
+.overlay-close-btn::before {
+  transform: rotate(45deg);
+}
+
+.overlay-close-btn::after {
+  transform: rotate(-45deg);
+}
+
+.overlay-close-btn:hover {
+  transform: rotate(90deg);
+}
+
+.overlay-close-btn:hover::before,
+.overlay-close-btn:hover::after {
+  background-color: var(--accent-color);
+}
+
+.overlay-link {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 5vw, 2.2rem); /* Зменшена нижня межа для Галаксі А3 */
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 300;
+  letter-spacing: 2px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.overlay-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.overlay-link:hover {
+  color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+.overlay-link:hover::after {
+  width: 50%;
+}
+
+.overlay-btn-order {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  padding: 16px 40px;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important; /* Білий неон */
+  color: #fff !important;
+  transition: all 0.3s ease;
+}
+
+.overlay-btn-order:hover {
+  box-shadow: 0 0 35px var(--accent-color) !important; /* Динамічний неон при наведенні */
+  border-color: var(--accent-color) !important;
+}
+
+/* ================================ */
+/* AGE SWITCHER */
+/* ================================ */
+.age-switcher-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.age-switcher {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 40px;
+  padding: 4px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin-bottom: 12px;
+  max-width: 95vw;
+  overflow-x: auto; /* На випадок вузьких екранів */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.age-switcher::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.age-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  white-space: nowrap;
+}
+
+.age-btn.active {
+  background: var(--accent-color);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.age-hint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .age-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  
+  .menu-layout-helper {
+    padding-top: 5vh; /* Залишаємо симетричне центрування і на мобільному */
+  }
+
+  .overlay-nav {
+    gap: 20px;
+  }
+  
+  .overlay-btn-order {
+    padding: 12px 28px;
+    font-size: 0.9rem;
+  }
+  
+  /* Мобільний хрестик: зміщений вгору і вправо, і зменшений на 10% */
+  .overlay-close-btn {
+    right: 25px;
+    top: 25px;
+    width: 50px;
+    height: 50px;
+  }
+  .overlay-close-btn::before,
+  .overlay-close-btn::after {
+    width: 45px;
+    height: 1px;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ЯК ЦЕ ПРАЦЮЄ — КРОКИ
+════════════════════════════════════════════════════════ */
+.how-it-works-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.hiw-step {
+  flex: 1;
+  min-width: 200px;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 20px;
+  position: relative;
+}
+
+.hiw-number {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--accent-color);
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+.hiw-icon {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  display: block;
+  filter: drop-shadow(0 0 12px var(--accent-color));
+}
+
+.hiw-step h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.hiw-step p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.hiw-connector {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-color), transparent);
+  opacity: 0.4;
+  align-self: center;
+  margin-top: -60px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .how-it-works-steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .hiw-connector {
+    width: 1px;
+    height: 40px;
+    margin: 0;
+    background: linear-gradient(180deg, var(--accent-color), transparent);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   СКЛАД — СІТКА ІНГРЕДІЄНТІВ
+════════════════════════════════════════════════════════ */
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.ingredient-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: left;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.ingredient-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.ing-icon {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.ingredient-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.ingredient-card p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ПОРІВНЯЛЬНА ТАБЛИЦЯ
+════════════════════════════════════════════════════════ */
+.comparison-table {
+  max-width: 860px;
+  margin: 0 auto;
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.comp-header,
+.comp-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+}
+
+.comp-header {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0;
+}
+
+.comp-row {
+  border-top: 1px solid var(--glass-border);
+}
+
+.comp-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.comp-cell {
+  padding: 18px 24px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.comp-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.comp-us {
+  font-weight: 600;
+  color: #fff;
+  border-left: 1px solid var(--glass-border);
+  justify-content: center;
+  text-align: center;
+}
+
+.comp-them {
+  color: var(--text-secondary);
+  border-left: 1px solid var(--glass-border);
+  justify-content: center;
+  text-align: center;
+}
+
+.comp-win {
+  color: #4ade80;
+}
+
+.comp-win::before {
+  content: '✓ ';
+  font-weight: 700;
+}
+
+.comp-lose {
+  color: #f87171;
+}
+
+.comp-lose::before {
+  content: '✕ ';
+}
+
+.comp-header .comp-us {
+  color: #4ade80;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  padding: 20px 24px;
+}
+
+.comp-header .comp-them {
+  color: #f87171;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  padding: 20px 24px;
+}
+
+@media (max-width: 640px) {
+  .comp-cell {
+    padding: 14px 12px;
+    font-size: 0.78rem;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ВІДГУКИ
+════════════════════════════════════════════════════════ */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.review-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.review-stars {
+  color: #f59e0b;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.review-text {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  line-height: 1.7;
+  flex-grow: 1;
+  font-style: italic;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-color), rgba(255,255,255,0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #000;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.review-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.review-city {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   FAQ АКОРДЕОН
+════════════════════════════════════════════════════════ */
+.faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.faq-item:hover,
+.faq-item.open {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.faq-question {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 22px 28px;
+  text-align: left;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-body);
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+  color: var(--accent-color);
+}
+
+.faq-arrow {
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  transition: transform 0.3s ease, color 0.3s ease;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq-item.open .faq-arrow {
+  transform: rotate(90deg);
+  color: var(--accent-color);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 28px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding: 0 28px 24px;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   AGE GATE — Попап підтвердження 18+
+   Фон: бетонна стіна з неоновим знаком 18+ ONLY
+════════════════════════════════════════════════════════ */
+.age-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  /* Конкретна стіна з неоновим знаком */
+  background-image: url('age-gate-bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+/* Темний шар поверх фону для читаності тексту */
+.age-gate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 0;
+}
+
+
+.age-gate.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.age-gate.closing {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.age-gate-card {
+  background: rgba(10, 10, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 52px 44px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1; /* поверх ::before overlay */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 60px rgba(255, 20, 20, 0.15),
+    0 24px 64px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.age-gate.active .age-gate-card {
+  transform: translateY(0) scale(1);
+}
+
+.age-gate-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.age-gate-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.age-gate-text {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+.age-gate-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.age-gate-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.age-gate-yes {
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.age-gate-yes:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255, 255, 255, 0.25);
+}
+
+.age-gate-no {
+  background: transparent;
+  color: #666;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-body);
+}
+
+.age-gate-no:hover {
+  color: #aaa;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.age-gate-note {
+  font-size: 0.78rem;
+  color: #555;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.age-gate-note a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  .age-gate-card {
+    padding: 36px 24px;
+  }
+  .age-gate-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   CSS-ШТАМП «18+ ONLY» — всередині картки попапу
+   Стиль: гумовий штамп, але елегантний, без агресії
+   Колір: поточний --accent-color сайту
+════════════════════════════════════════════════ */
+.age-stamp {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.age-stamp-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 6px 14px 6px 8px;
+  opacity: 0.9;
+  /* Ефект потертого штампу */
+  box-shadow:
+    0 0 8px var(--accent-color),
+    inset 0 0 6px rgba(0,0,0,0.3);
+  transform: rotate(-2deg);
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+/* Псевдо-ефект потертості */
+.age-stamp-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.04) 3px,
+    rgba(0,0,0,0.04) 4px
+  );
+}
+
+.age-stamp-num {
+  font-family: 'Jura', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  line-height: 1;
+  border-right: 2px solid var(--accent-color);
+  padding-right: 8px;
+}
+
+.age-stamp-word {
+  font-family: 'Jura', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.age-gate-heading {
+  display: block;
+  font-family: 'Jura', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+}
+

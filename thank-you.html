@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Дякуємо за замовлення | Секрет Казанови</title>
+    <meta name="description" content="Ваше замовлення прийнято. Ми зв'яжемося з вами найближчим часом.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <style>
+        /* Сторінка подяки — повноекранний центрований layout */
+        .thankyou-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .thankyou-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 64px 48px;
+            max-width: 540px;
+            width: 100%;
+            position: relative;
+        }
+
+        .thankyou-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            -webkit-mask-image: radial-gradient(ellipse at center, transparent 40%, black 90%);
+            mask-image: radial-gradient(ellipse at center, transparent 40%, black 90%);
+            z-index: -1;
+        }
+
+        .thankyou-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+            display: block;
+            animation: popIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .thankyou-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #00d2ff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .thankyou-subtitle {
+            font-size: 1.05rem;
+            color: #aaaaaa;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .thankyou-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .thankyou-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+        }
+
+        .ts-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .ts-text {
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .ts-text strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .thankyou-divider {
+            width: 60px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 auto 32px;
+        }
+
+        .thankyou-contact {
+            font-size: 0.88rem;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .thankyou-contact a {
+            color: #00d2ff;
+            text-decoration: none;
+        }
+
+        .thankyou-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .logo-top {
+            position: absolute;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Jura', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        @media (max-width: 480px) {
+            .thankyou-card {
+                padding: 40px 24px;
+            }
+            .thankyou-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Логотип вгорі -->
+    <a href="index.html" class="logo-top"><img src="ck-logo.png" alt="ck" style="height: 1.2em; width: auto; object-fit: contain; filter: brightness(10) contrast(0.8); opacity: 0.85;"></a>
+
+    <div class="thankyou-page">
+        <div class="thankyou-card fade-up">
+
+            <span class="thankyou-icon">🎉</span>
+
+            <h1 class="thankyou-title">Замовлення прийнято!</h1>
+            <p class="thankyou-subtitle">
+                Дякуємо за довіру. Наш менеджер зв'яжеться з вами
+                протягом <strong style="-webkit-text-fill-color:#fff;">30 хвилин</strong> для підтвердження.
+            </p>
+
+            <div class="thankyou-steps">
+                <div class="thankyou-step">
+                    <span class="ts-icon">📞</span>
+                    <div class="ts-text">
+                        <strong>Підтвердження замовлення</strong>
+                        Очікуйте дзвінок або повідомлення на вказаний номер телефону.
+                    </div>
+                </div>
+                <div class="thankyou-step">
+                    <span class="ts-icon">📦</span>
+                    <div class="ts-text">
+                        <strong>Відправка</strong>
+                        Посилка буде відправлена Новою Поштою протягом 1–2 робочих днів. Без маркувань.
+                    </div>
+                </div>
+                <div class="thankyou-step">
+                    <span class="ts-icon">🔔</span>
+                    <div class="ts-text">
+                        <strong>SMS-трекінг</strong>
+                        Ви отримаєте номер ТТН для відстеження посилки.
+                    </div>
+                </div>
+            </div>
+
+            <div class="thankyou-divider"></div>
+
+            <p class="thankyou-contact">
+                Маєте питання? Пишіть або телефонуйте:<br>
+                <a href="tel:+380985940006">+38 (098) 594-00-06</a> &nbsp;·&nbsp;
+                <a href="https://t.me/casanovasecret">Telegram</a> &nbsp;·&nbsp;
+                <a href="viber://chat?number=%2B380985940006">Viber</a>
+            </p>
+
+            <div class="thankyou-buttons">
+                <a href="index.html" class="btn-glass outline">← Повернутись на сайт</a>
+                <a href="https://t.me/casanovasecret" class="btn-glass primary-glow">Написати в Telegram</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Елемент fade-up без scroll-тригера (він вже в зоні видимості)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fade-up').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
