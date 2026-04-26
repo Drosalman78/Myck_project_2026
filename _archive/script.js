@@ -1,5 +1,18 @@
+// Global variables for selected product
+window.selectedProductPrice = 895; // Default
+window.selectedProductName = 'Золота середина (5 стіків)'; // Default
+
+window.openPaymentModal = function(price, product) {
+    window.selectedProductPrice = price;
+    window.selectedProductName = product;
+    const paymentModal = document.getElementById('payment-modal');
+    if (paymentModal) {
+        paymentModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
 function updatePaymentUI(radioInput) {
-    // Всі картки робимо неактивними
     document.querySelectorAll('.payment-option').forEach(opt => {
         opt.classList.remove('active-opt');
     });
@@ -177,21 +190,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Modal Logic
     const paymentModal = document.getElementById('payment-modal');
     const modalCloseBtn = document.getElementById('modal-close-btn');
-    const buyButtons = document.querySelectorAll('.btn-primary');
     
     if (paymentModal) {
-        // Open modal on any primary buy button click
-        buyButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                if(btn.getAttribute('href') && btn.getAttribute('href').startsWith('#')) {
-                    // if it's an anchor link, don't open modal, let it scroll
-                    if(btn.getAttribute('href') === '#pricing') return;
-                }
-                e.preventDefault();
-                paymentModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Stop background scrolling
-            });
-        });
 
         // Close modal logic
         const closeModal = () => {
@@ -235,7 +235,52 @@ document.addEventListener("DOMContentLoaded", () => {
                     return false;
                 }
                 
-                // If everything is OK, standard submit takes over (the inline one currently stops default for demo)
+                e.preventDefault();
+
+                const paymentType = document.querySelector('input[name="payment_type"]:checked').value;
+                const submitBtn = document.getElementById('submit-order-btn');
+                const originalBtnText = submitBtn.textContent;
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Зачекайте...';
+
+                if (paymentType === 'online') {
+                    const gateway = document.querySelector('input[name="gateway"]:checked').value;
+                    
+                    fetch('/api/create-payment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: sanitizedName,
+                            phone: sanitizedPhone,
+                            amount: window.selectedProductPrice,
+                            productName: window.selectedProductName,
+                            gateway: gateway
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.paymentUrl) {
+                            window.location.href = data.paymentUrl;
+                        } else {
+                            alert(data.error || 'Помилка при створенні платежу');
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = originalBtnText;
+                        }
+                    })
+                    .catch(err => {
+                        alert('Помилка з\'єднання з сервером');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalBtnText;
+                    });
+                } else {
+                    // COD
+                    setTimeout(() => {
+                        window.location.href = 'thank-you.html';
+                    }, 1000);
+                }
             });
         }
     }

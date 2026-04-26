@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: var(--accent-color);
+  --color-background: var(--bg-color);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --font-heading: "Jura", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+:root {
+  --bg-color: #0d0c0c;
+  --text-primary: #F2F2F2;
+  --text-secondary: #aaaaaa;
+  --accent-color: #00d2ff;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  
+  --background: var(--bg-color);
+  --foreground: var(--text-primary);
+}
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply bg-black text-text-primary leading-relaxed antialiased overflow-x-hidden;
+    font-family: 'Inter', 'Montserrat', sans-serif;
+  }
+
+  /* Fixed background effect */
+  body::before {
+    content: "";
+    @apply fixed inset-0 w-full h-[130vh] -top-[15vh] z-[-10] pointer-events-none;
+    background-image: url('/images/bg_ballet_ai.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: transform;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    @apply font-normal;
+  }
+}
+
+/* Custom Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Glassmorphism utility */
+.glass-effect {
+  @apply relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl shadow-2xl;
+}
+
