@@ -65,3 +65,17 @@
   @apply relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl shadow-2xl;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+.section-anchor {
+  scroll-margin-top: 80px;
+}
+
+@supports (height: 100dvh) {
+  .h-dvh {
+    height: 100dvh;
+  }
+}
+

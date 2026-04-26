@@ -6,6 +6,10 @@ import Hero from '@/components/Hero';
 import AgeSwitcher from '@/components/AgeSwitcher';
 import ComparisonTable from '@/components/ComparisonTable';
 import Pricing from '@/components/Pricing';
+import Ingredients from '@/components/Ingredients';
+import Reviews from '@/components/Reviews';
+import FAQ from '@/components/FAQ';
+import Footer from '@/components/Footer';
 import StickyCTA from '@/components/StickyCTA';
 import AgeGate from '@/components/AgeGate';
 import PaymentModal from '@/components/PaymentModal';
@@ -25,9 +29,11 @@ export default function Home() {
       <Hero onBuy={handleOpenModal} />
       <AgeSwitcher />
       <ComparisonTable />
+      <Ingredients />
       <Pricing onBuy={handleOpenModal} />
-      
-      {/* Остальні секції будуть додані далі (Ingredients, Reviews, FAQ) */}
+      <Reviews />
+      <FAQ />
+      <Footer />
       
       <StickyCTA onBuy={handleOpenModal} />
       <AgeGate />
