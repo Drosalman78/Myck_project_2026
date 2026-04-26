@@ -12,7 +12,7 @@ const Header = () => {
         <img 
           src="/images/ck-logo.png" 
           alt="ck" 
-          className="h-20 w-auto object-contain brightness-[10] contrast-[0.8] opacity-85"
+          className="h-[5.5rem] md:h-24 w-auto object-contain brightness-[10] contrast-[0.8] opacity-85"
         />
       </Link>
 
