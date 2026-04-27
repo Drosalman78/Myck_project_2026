@@ -45,41 +45,45 @@ const Pricing = ({ onBuy }: PricingProps) => {
           {pricingOptions.map((option, idx) => (
             <div 
               key={idx}
-              className={`glass-effect p-8 md:p-10 flex flex-col items-center relative transition-all duration-500 hover:scale-[1.02] ${
-                option.isFeatured 
-                  ? 'border-accent shadow-[0_0_40px_rgba(0,210,255,0.15)] md:scale-110 z-10' 
-                  : 'border-white/10'
-              }`}
+              className="relative flex flex-col"
             >
-              {option.isFeatured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-black text-[0.7rem] font-bold px-4 py-1 rounded-full shadow-[0_0_15px_rgba(0,210,255,0.4)]">
-                  ХІТ ПРОДАЖУ
-                </div>
-              )}
-              
-              <h3 className={`text-xl font-heading mb-2 ${option.isFeatured ? 'text-accent' : 'text-white'}`}>
-                {option.title}
-              </h3>
-              <p className="text-text-secondary text-sm mb-6">{option.quantity}</p>
-              
-              <div className="text-4xl md:text-5xl font-bold text-white mb-6 flex items-baseline gap-2">
-                {option.price} <span className="text-lg font-normal opacity-60 uppercase">грн</span>
-              </div>
-              
-              <p className="text-text-secondary text-sm leading-relaxed mb-10 flex-grow">
-                {option.description}
-              </p>
-              
-              <button 
-                onClick={() => onBuy(`${option.title} (${option.quantity})`, option.price)}
-                className={`w-full py-4 rounded-2xl font-bold text-sm tracking-widest transition-all ${
+              <div 
+                className={`glass-effect p-8 md:p-10 flex flex-col items-center h-full relative transition-all duration-500 hover:scale-[1.05] hover:z-20 hover:shadow-[0_20px_50px_rgba(0,210,255,0.2)] ${
                   option.isFeatured 
-                    ? 'bg-accent text-black shadow-[0_0_20px_rgba(0,210,255,0.3)] hover:shadow-[0_0_30px_rgba(0,210,255,0.5)]' 
-                    : 'bg-transparent text-white border border-white/20 hover:border-accent hover:text-accent'
+                    ? 'border-accent shadow-[0_0_40px_rgba(0,210,255,0.15)] md:scale-105 z-10' 
+                    : 'border-white/10'
                 }`}
               >
-                {option.buttonText}
-              </button>
+                {option.isFeatured && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-black text-[0.7rem] font-bold px-4 py-1 rounded-full shadow-[0_0_15px_rgba(0,210,255,0.4)] z-20">
+                    ХІТ ПРОДАЖУ
+                  </div>
+                )}
+                
+                <h3 className={`text-xl font-heading mb-2 ${option.isFeatured ? 'text-accent' : 'text-white'}`}>
+                  {option.title}
+                </h3>
+                <p className="text-text-secondary text-sm mb-6">{option.quantity}</p>
+                
+                <div className="text-4xl md:text-5xl font-bold text-white mb-6 flex items-baseline gap-2">
+                  {option.price} <span className="text-lg font-normal opacity-60 uppercase">грн</span>
+                </div>
+                
+                <p className="text-text-secondary text-sm leading-relaxed mb-10 flex-grow">
+                  {option.description}
+                </p>
+                
+                <button 
+                  onClick={() => onBuy(`${option.title} (${option.quantity})`, option.price)}
+                  className={`w-full py-4 rounded-2xl font-bold text-sm tracking-widest transition-all ${
+                    option.isFeatured 
+                      ? 'bg-accent text-black shadow-[0_0_20px_rgba(0,210,255,0.3)] hover:shadow-[0_0_30px_rgba(0,210,255,0.5)]' 
+                      : 'bg-transparent text-white border border-white/20 hover:border-accent hover:text-accent'
+                  }`}
+                >
+                  {option.buttonText}
+                </button>
+              </div>
             </div>
           ))}
         </div>
