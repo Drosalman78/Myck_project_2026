@@ -45,14 +45,14 @@ const Pricing = ({ onBuy }: PricingProps) => {
           {pricingOptions.map((option, idx) => (
             <div 
               key={idx}
-              className="relative flex flex-col"
+              className="relative flex flex-col group/item"
             >
               <div 
-                className={`glass-effect p-8 md:p-10 flex flex-col items-center h-full relative transition-all duration-500 hover:scale-[1.05] hover:z-20 hover:shadow-[0_20px_50px_rgba(0,210,255,0.2)] ${
+                className={`glass-effect p-8 md:p-10 flex flex-col items-center h-full relative transition-all duration-500 will-change-transform ${
                   option.isFeatured 
-                    ? 'border-accent shadow-[0_0_40px_rgba(0,210,255,0.15)] md:scale-105 z-10' 
-                    : 'border-white/10'
-                }`}
+                    ? 'border-accent shadow-[0_0_40px_rgba(0,210,255,0.15)] md:scale-105 z-10 hover:scale-[1.1] hover:z-30' 
+                    : 'border-white/10 hover:scale-[1.05] hover:z-20'
+                } hover:shadow-[0_20px_50px_rgba(0,210,255,0.25)]`}
               >
                 {option.isFeatured && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-black text-[0.7rem] font-bold px-4 py-1 rounded-full shadow-[0_0_15px_rgba(0,210,255,0.4)] z-20">
