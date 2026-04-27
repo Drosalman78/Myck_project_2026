@@ -107,7 +107,7 @@ const ChatFAB = () => {
   ];
 
   return (
-    <div ref={fabRef} className="fixed bottom-7 right-7 sm:bottom-10 sm:right-10 z-[2000] flex flex-col items-center gap-4">
+    <div ref={fabRef} className="fixed bottom-7 right-5 sm:bottom-10 sm:right-10 z-[2000] flex flex-col items-end gap-4">
       {/* Menu Stack - Vertical alignment (Requirement 1.5 & 2.2) */}
       <div className={`flex flex-col gap-4 transition-all duration-500 ease-out ${isOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-0 pointer-events-none'}`}>
         {chatOptions.map((opt, i) => (
@@ -134,10 +134,10 @@ const ChatFAB = () => {
         ))}
       </div>
 
-      {/* Main Toggle Button */}
+      {/* Main Toggle Button - Size matched to w-12 for perfect vertical alignment */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20 transition-all duration-300 relative group overflow-hidden ${isOpen ? 'bg-white/10' : 'bg-white/5'}`}
+        className={`w-12 h-12 rounded-full flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20 transition-all duration-300 relative group overflow-hidden ${isOpen ? 'bg-white/10' : 'bg-white/5'}`}
         aria-label="Зв'яжіться з нами"
       >
         <div className={`absolute inset-0 bg-accent/20 transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'}`}></div>
