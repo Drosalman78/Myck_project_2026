@@ -10,7 +10,7 @@ import Ingredients from '@/components/Ingredients';
 import Reviews from '@/components/Reviews';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
-import StickyCTA from '@/components/StickyCTA';
+import ChatFAB from '@/components/ChatFAB';
 import AgeGate from '@/components/AgeGate';
 import PaymentModal from '@/components/PaymentModal';
 
@@ -35,7 +35,7 @@ export default function Home() {
       <FAQ />
       <Footer />
       
-      <StickyCTA onBuy={handleOpenModal} />
+      <ChatFAB onBuy={handleOpenModal} />
       <AgeGate />
       
       <PaymentModal 
