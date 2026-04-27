@@ -60,6 +60,19 @@
   animation: fadeUp 0.8s ease forwards;
 }
 
+  .scale-up {
+    animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes neonPulse {
+    0%, 100% { text-shadow: 0 0 0px #fff, 0 0 0px #fff; opacity: 1; }
+    50% { text-shadow: 0 0 8px #fff, 0 0 15px #fff; opacity: 0.9; }
+  }
+
+  .hover-neon:hover {
+    animation: neonPulse 1.5s infinite ease-in-out;
+  }
+
 /* Glassmorphism utility */
 .glass-effect {
   @apply relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl shadow-2xl;
