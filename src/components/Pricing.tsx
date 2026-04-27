@@ -45,12 +45,17 @@ const Pricing = ({ onBuy }: PricingProps) => {
           {pricingOptions.map((option, idx) => (
             <div 
               key={idx}
-              className="relative flex flex-col group/item"
+              className="relative flex flex-col group/card"
             >
+              {/* Neon Border Beam Effect */}
+              <div className="absolute -inset-[1px] rounded-[32px] overflow-hidden opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-[-200%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_150deg,var(--accent-color)_180deg,transparent_210deg)] animate-[spin_4s_linear_infinite]"></div>
+              </div>
+
               <div 
                 className={`glass-effect p-8 md:p-10 flex flex-col items-center h-full relative transition-all duration-500 will-change-transform ${
                   option.isFeatured 
-                    ? 'border-accent shadow-[0_0_40px_rgba(0,210,255,0.15)] md:scale-105 z-10 hover:scale-[1.1] hover:z-30' 
+                    ? 'border-accent/40 shadow-[0_0_40px_rgba(0,210,255,0.15)] md:scale-105 z-10 hover:scale-[1.1] hover:z-30' 
                     : 'border-white/10 hover:scale-[1.05] hover:z-20'
                 } hover:shadow-[0_20px_50px_rgba(0,210,255,0.25)]`}
               >
@@ -60,10 +65,15 @@ const Pricing = ({ onBuy }: PricingProps) => {
                   </div>
                 )}
                 
-                <h3 className={`text-xl font-heading mb-2 ${option.isFeatured ? 'text-accent' : 'text-white'}`}>
+                <h3 className={`text-xl font-heading mb-2 transition-all duration-500 ${
+                  option.isFeatured ? 'text-accent' : 'text-white'
+                } group-hover/card:drop-shadow-[0_0_8px_var(--accent-color)]`}>
                   {option.title}
                 </h3>
-                <p className="text-text-secondary text-sm mb-6">{option.quantity}</p>
+                
+                <p className="text-white/80 text-[15.4px] mb-6 transition-all duration-500 group-hover/card:drop-shadow-[0_0_5px_var(--accent-color)]">
+                  {option.quantity}
+                </p>
                 
                 <div className="text-4xl md:text-5xl font-bold text-white mb-6 flex items-baseline gap-2">
                   {option.price} <span className="text-lg font-normal opacity-60 uppercase">грн</span>
