@@ -35,7 +35,7 @@ export default function Home() {
       <FAQ />
       <Footer />
       
-      <ChatFAB onBuy={handleOpenModal} />
+      <ChatFAB />
       <AgeGate />
       
       <PaymentModal 
