@@ -62,7 +62,7 @@ const ChatFAB = () => {
       name: 'Viber', 
       icon: (
         <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
-          <path d="M18.14 14.34c-.24-.44-1.61-1.92-1.85-2.09-.17-.12-.35-.19-.54-.19-.54 0-1.67.73-2.12 1.31-.3.38-.45.47-.8.31-.45-.21-1.75-1.02-3.1-2.35-1.35-1.33-2.14-2.65-2.35-3.1-.16-.35-.07-.5.31-.8.58-.45 1.31-1.58 1.31-2.12 0-.19-.07-.37-.19-.54-.17-.24-1.65-1.61-2.09-1.85-.35-.19-.5-.13-.73.11-.22.21-1.31 1.31-1.31 2.35 0 1.04.31 2.46 1.21 4.12.87 1.61 2.21 3.5 4.12 5.41 1.91 1.91 3.8 3.25 5.41 4.12 1.66.9 3.08 1.21 4.12 1.21 1.04 0 2.14-1.09 2.35-1.31.24-.23.3-.38.11-.73zM14.47 2.1c2.19.16 4.3.93 6.07 2.21.19.14.23.4.11.6l-.6.8c-.12.16-.34.22-.52.12-1.48-1.06-3.23-1.68-5.07-1.8-.2-.01-.36-.18-.36-.38v-1c.01-.21.18-.36.37-.35zm-.31 3.79c1.47.16 2.87.69 4.04 1.54.19.14.23.4.11.6l-.6.8c-.12.16-.34.22-.52.12-1-0.72-2.18-1.16-3.43-1.28-.2-.02-.36-.19-.36-.39v-1c.01-.2.18-.36.38-.36l.38-.03zm.29 3.63c.69.1 1.35.34 1.92.71.18.12.23.36.14.54l-.4.8c-.09.18-.31.25-.49.17-.46-.29-1.01-.48-1.59-.56-.2-.03-.35-.2-.35-.41v-1c.01-.21.19-.37.39-.37l.38.12z"/>
+          <path d="M17.5 11c.2 0 .4-.1.6-.2.5-.4.7-1.1.4-1.7-.1-.2-.2-.3-.4-.4-.5-.3-1.1-.1-1.4.4-.1.1-.2.3-.2.5 0 .8.7 1.4 1 1.4zm-1.6-4c.4-.7.2-1.6-.5-2-.2-.1-.4-.2-.6-.2-.8-.2-1.6.3-1.9 1-.1.2-.2.5-.1.7.2.8.9 1.3 1.7 1.3.5-.1.9-.4 1.4-.8zm-6.6 8.5c-.2-.1-.4-.1-.6-.2-.3-.2-.4-.6-.2-.9.2-.3.6-.4.9-.2.2.1.4.1.6.2.3.2.4.6.2.9-.2.3-.6.4-.9.2zM21 12c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10 10 4.5 10 10zm-5.7 6c2.4-1.1 3.5-3.5 3.1-5.7-.4-2.5-2.7-4-5-3.5-.6.1-1.1.4-1.6.7l-1.3-.4c-.1 0-.3 0-.4.1-.1.1-.1.2-.1.4l.4 1.3c-.4.5-.6 1.1-.7 1.6-.5 2.3 1 4.6 3.5 5 2.1.4 4.1-.5 5.1-1.5z"/>
         </svg>
       ),
       href: 'viber://chat?number=%2B380985940006',
@@ -90,6 +90,17 @@ const ChatFAB = () => {
       href: 'https://wa.me/380985940006',
       bg: 'bg-[#25D366]/10',
       border: 'border-[#25D366]/40'
+    },
+    { 
+      name: 'Messenger', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
+          <path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.908 1.464 5.501 3.753 7.234.197.148.318.384.322.637l.017 2.193c.004.538.56.883 1.041.642l2.455-1.23a.81.81 0 0 1 .59-.046c.582.164 1.196.251 1.822.251 5.523 0 10-4.145 10-9.258S17.523 2 12 2zm1 12.5l-2.5-2.5-4.5 2.5 5-5.5 2.5 2.5 4.5-2.5-5 5.5z"/>
+        </svg>
+      ),
+      href: 'https://m.me/casanovasecret',
+      bg: 'bg-[#006AFF]/10',
+      border: 'border-[#006AFF]/40'
     }
   ];
 
@@ -100,7 +111,7 @@ const ChatFAB = () => {
   return (
     <div 
       ref={fabRef} 
-      className={`fixed bottom-7 right-5 sm:bottom-10 sm:right-10 z-[2000] flex flex-col items-end gap-4 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isVisible ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-90 blur-md pointer-events-none'}`}
+      className={`fixed bottom-7 right-5 sm:bottom-10 sm:right-10 z-[2000] flex flex-col items-end gap-4 transition-all duration-1000 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isVisible ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-20 scale-75 blur-2xl pointer-events-none'}`}
     >
       {/* Menu Stack */}
       <div className={`flex flex-col gap-4 transition-all duration-500 ease-out ${isOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-0 pointer-events-none'}`}>
@@ -128,25 +139,26 @@ const ChatFAB = () => {
         ))}
       </div>
 
-      {/* Main Toggle Button - Mercedes Smoothness */}
+      {/* Main Toggle Button - Mercedes Smoothness + Premium Flow */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className={`${toggleSizeClass} rounded-full flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20 transition-all duration-300 relative group overflow-hidden ${isOpen ? 'bg-white/10' : 'bg-white/5'}`}
+        className={`${toggleSizeClass} rounded-full flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/20 transition-all duration-500 relative group overflow-hidden ${isOpen ? 'bg-white/10' : 'bg-white/5'}`}
         aria-label="Зв'яжіться з нами"
       >
-        <div className={`absolute inset-0 bg-accent/20 transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'}`}></div>
+        {/* Premium Shimmer/Flow Layer */}
+        <div className="absolute inset-0 animate-premium-flow pointer-events-none opacity-50"></div>
+        <div className={`absolute inset-0 bg-accent/10 transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'}`}></div>
         
         {isOpen ? (
-           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6 text-white rotate-90 transition-transform duration-300">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6 text-white rotate-90 transition-transform duration-300 relative z-10">
              <line x1="18" y1="6" x2="6" y2="18"></line>
              <line x1="6" y1="6" x2="18" y2="18"></line>
            </svg>
         ) : (
-          <div className="relative">
+          <div className="relative z-10">
              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-7 h-7 text-white">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
              </svg>
-             <span className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full border-2 border-black animate-pulse"></span>
           </div>
         )}
       </button>

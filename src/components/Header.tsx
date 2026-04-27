@@ -65,13 +65,20 @@ const Header = () => {
           isVisible ? 'opacity-100 translate-y-0' : 
           'opacity-0 -translate-y-4 pointer-events-none'
         }`}>
-          {['ГОЛОВНА', 'ПЕРЕВАГИ', 'ЯК ЦЕ ПРАЦЮЄ', 'ВІДГУКИ', 'МАГАЗИН', 'FAQ'].map((item) => (
+          {[
+            { name: 'ГОЛОВНА', href: '/' },
+            { name: 'ІНГРЕДІЄНТИ', href: '/#ingredients' },
+            { name: 'ВІДГУКИ', href: '/#reviews' },
+            { name: 'БЛОГ', href: '/blog' },
+            { name: 'ІНСТРУКЦІЯ', href: '/guide' },
+            { name: 'МАГАЗИН', href: '/#pricing' },
+          ].map((item) => (
             <Link 
-              key={item} 
-              href={`#${item.toLowerCase().replace(/ /g, '-')}`} 
+              key={item.name} 
+              href={item.href} 
               className="text-text-secondary text-[14.7px] hover:text-text-primary transition-colors tracking-widest font-medium"
             >
-              {item}
+              {item.name}
             </Link>
           ))}
         </nav>
