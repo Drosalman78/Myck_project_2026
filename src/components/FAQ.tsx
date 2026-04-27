@@ -2,60 +2,66 @@
 
 import React, { useState } from 'react';
 
-const faqItems = [
+const faqData = [
   {
-    q: 'Як приймати "Секрет Казанови"?',
-    a: 'Достатньо прийняти 1 стік за 30-40 хвилин до планованої близькості. Запивати можна водою або будь-яким напоєм. Не рекомендується перевищувати дозу 1 стік на добу.'
+    q: 'Через скільки починає діяти препарат?',
+    a: 'Ефект починається через 30 хвилин після прийому. Оптимальний пік настає через 1–2 години.'
   },
   {
-    q: 'Чи сумісний засіб з алкоголем?',
-    a: 'Так, на відміну від більшості синтетичних препаратів, "Секрет Казанови" на 100% сумісний з помірними дозами алкоголю. Він не створює додаткового навантаження на серце.'
+    q: 'Скільки триває ефект?',
+    a: 'До 72 годин — три доби після одного прийому. Саме тому одного стіку вистачає на цілий романтичний вікенд.'
   },
   {
-    q: 'Яка тривалість дії одного стіка?',
-    a: 'Ефект індивідуальний, але більшість чоловіків відчувають підвищений тонус та готовність протягом 48-72 годин після прийому.'
+    q: 'Чи сумісний з алкоголем?',
+    a: 'Так. Помірне вживання алкоголю не впливає на ефективність препарату і не викликає токсичних реакцій. Ваш романтичний вечір з келихом вина — цілком безпечний.'
   },
   {
-    q: 'Чи є побічні ефекти?',
-    a: 'Засіб повністю натуральний і зазвичай переноситься дуже добре. У поодиноких випадках можлива індивідуальна чутливість до окремих трав. Якщо ви маєте серйозні хронічні захворювання, проконсультуйтеся з лікарем.'
+    q: 'Чи викликає звикання?',
+    a: 'Ні. Препарат діє ситуативно і не впливає на гормональну систему постійно. Ви самі вирішуєте, коли і як часто його приймати.'
   },
   {
-    q: 'Як виглядає упаковка при доставці?',
-    a: 'Ми гарантуємо повну анонімність. Замовлення пакується в звичайний кур\'єрський пакет або коробку без будь-яких маркувань, логотипів чи назв товару. Навіть працівник пошти не знатиме, що всередині.'
+    q: 'Як виглядає посилка?',
+    a: 'Абсолютно нейтрально. Жодних логотипів, жодних написів на тему інтимних товарів. У накладній — нейтральний опис (наприклад, "Спортивне харчування"). Навіть кур\'єр не знає, що всередині.'
+  },
+  {
+    q: 'Чи є протипоказання?',
+    a: 'Препарат має натуральний склад і добре переноситься. Проте не рекомендується при індивідуальній непереносимості компонентів. Якщо маєте хронічні захворювання серця у гострій фазі — проконсультуйтеся з лікарем.'
   }
 ];
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-20 md:py-32 px-[5%] section-anchor">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-heading mb-4 text-white">
-            Часті запитання
-          </h2>
-          <p className="text-text-secondary">
-            Відповідаємо на найпопулярніші запитання про наш продукт
-          </p>
-        </div>
+    <section id="faq" className="py-24 md:py-32 px-[5%] bg-black/20">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-5xl font-heading mb-6 text-white fade-up">
+          Часті запитання
+        </h2>
+        <p className="text-text-secondary mb-16 fade-up">
+          Відповідаємо чесно і по суті
+        </p>
 
-        <div className="space-y-4">
-          {faqItems.map((item, idx) => (
-            <div key={idx} className="glass-effect overflow-hidden">
+        <div className="space-y-4 text-left fade-up">
+          {faqData.map((item, idx) => (
+            <div 
+              key={idx} 
+              className={`border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 ${openIdx === idx ? 'bg-white/5 border-white/20' : 'bg-transparent'}`}
+            >
               <button 
-                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full p-6 text-left flex justify-between items-center hover:bg-white/[0.03] transition-colors"
+                onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
+                className="w-full flex items-center justify-between p-6 md:p-8 text-left transition-colors"
               >
-                <span className="text-white font-bold text-lg md:text-xl pr-4">{item.q}</span>
-                <span className={`text-accent text-2xl transition-transform duration-300 ${openIndex === idx ? 'rotate-45' : ''}`}>
+                <span className="text-white font-bold md:text-lg pr-8">{item.q}</span>
+                <span className={`text-2xl text-accent transition-transform duration-300 ${openIdx === idx ? 'rotate-45' : ''}`}>
                   +
                 </span>
               </button>
+              
               <div 
-                className={`transition-all duration-500 ease-in-out overflow-hidden ${openIndex === idx ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+                className={`transition-all duration-300 ease-in-out ${openIdx === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
               >
-                <div className="p-6 pt-0 text-text-secondary leading-relaxed border-t border-white/5">
+                <div className="px-6 md:px-8 pb-8 text-text-secondary leading-relaxed md:text-lg border-t border-white/5 pt-4">
                   {item.a}
                 </div>
               </div>
